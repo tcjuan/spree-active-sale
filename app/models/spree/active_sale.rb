@@ -8,7 +8,7 @@ module Spree
     validate :start_and_end_date_presence, :start_and_end_date_range
 
     has_many :active_sale_events
-    has_one :root, :conditions => { :parent_id => nil }, :class_name => "Spree::ActiveSaleEvent",
+    has_one :root, ->{ where(:parent_id => nil) }, :class_name => "Spree::ActiveSaleEvent",
                    :dependent => :destroy
 
     before_save :have_valid_position
@@ -29,7 +29,7 @@ module Spree
         if root
           root.update_attributes(root_hash)
         else
-          self.root = Spree::ActiveSaleEvent.create!(root_hash, :without_protection => true)
+          self.root = Spree::ActiveSaleEvent.create!(root_hash)
         end
       end
 

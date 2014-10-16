@@ -4,17 +4,18 @@
 #
 module Spree
   class ActiveSaleEvent < Spree::SaleEvent
+    
     acts_as_nested_set :dependent => :destroy, :polymorphic => true
 
     before_validation :update_permalink
     before_save :have_valid_position
     after_save :update_parent_active_sales, :update_active_sale_position
 
-    has_many :sale_images, :as => :viewable, :dependent => :destroy, :order => 'position ASC'
+  #  has_many :sale_images, :as => :viewable, :dependent => :destroy, :order => 'position ASC'
     belongs_to :eventable, :polymorphic => true
     belongs_to :active_sale
 
-    attr_accessible :description, :end_date, :eventable_id, :eventable_type, :is_active, :is_hidden, :is_permanent, :name, :permalink, :active_sale_id, :start_date, :eventable_name, :discount, :parent_id
+  #  attr_accessible :description, :end_date, :eventable_id, :eventable_type, :is_active, :is_hidden, :is_permanent, :name, :permalink, :active_sale_id, :start_date, :eventable_name, :discount, :parent_id
 
     validates :name, :permalink, :eventable_id, :start_date, :end_date, :active_sale_id, :presence => true
     validates :eventable_type, :presence => true, :uniqueness => { :scope => :eventable_id, :message => I18n.t('spree.active_sale.event.validation.errors.live_event') }, :if => :live?
@@ -23,6 +24,7 @@ module Spree
 
     # Spree::ActiveSaleEvent.is_live? method 
     # should only/ always represents live and active events and not just live events.
+   
     def is_live? object
       object_class_name = object.class.name
       return object.live_and_active? if object_class_name == self.name

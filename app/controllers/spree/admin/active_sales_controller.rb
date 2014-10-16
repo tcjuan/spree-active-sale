@@ -21,12 +21,23 @@ module Spree
         redirect_to edit_object_url(@active_sale)
       end
 
+    
+
+
+
       def eventables
-        search = params[:eventable_type].constantize.search(:name_cont => params[:name])
+        
+        search = params[:eventable_type].constantize.ransack(:name_cont => params[:name])
         render :json => search.result.map(&:name)
+        
       end
 
       protected
+
+        def active_sale_params
+            params.require(:active_sale_event).permit(:description, :end_date, :eventable_id, :eventable_type, :is_active, :is_hidden, :is_permanent, :name, :permalink, :active_sale_id, :start_date, :eventable_name, :discount, :parent_id)
+        end
+
 
         def collection
           return @collection if @collection.present?
