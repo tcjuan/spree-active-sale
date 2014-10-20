@@ -10,7 +10,8 @@ module Spree
                       :default_style => :sale,
                       :url => '/spree/sales/:id/:style/:basename.:extension',
                       :path => ':rails_root/public/spree/sales/:id/:style/:basename.:extension',
-                      :convert_options => { :all => '-strip' }
+                      :convert_options => { :all => '-strip' },
+                      :url  => ":s3_eu_url"
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
     after_post_process :find_dimensions
