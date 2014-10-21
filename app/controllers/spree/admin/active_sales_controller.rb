@@ -26,8 +26,12 @@ module Spree
 
 
       def eventables
+        if params[:eventable_type] == 'Spree::Product'
+          search = params[:eventable_type].constantize.by_store(params[:store_id]).ransack(:name_cont => params[:name])
+        else
+          search = params[:eventable_type].constantize.ransack(:name_cont => params[:name])
+        end
         
-        search = params[:eventable_type].constantize.ransack(:name_cont => params[:name])
         render :json => search.result.map(&:name)
         
       end

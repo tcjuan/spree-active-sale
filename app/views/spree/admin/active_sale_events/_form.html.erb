@@ -127,7 +127,7 @@
     already_auto_completed = $(this).is('ac_input');
     if (!already_auto_completed) {
       $(this).autocomplete({
-        source: url+"?eventable_type="+eventable_type+"&name="+eventable_name
+        source: url+"?eventable_type="+eventable_type+"&name="+eventable_name+"&store_id="+"<%=current_store.id%>"
       });
       $(this).focus();
     }
