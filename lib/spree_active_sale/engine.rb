@@ -9,10 +9,14 @@ module SpreeActiveSale
     initializer "spree_active_sale.environment", :before => "spree.environment" do |app|
       Spree::ActiveSaleConfig = Spree::ActiveSaleConfiguration.new
       %w(ActionController::Base Spree::BaseController).each { |controller| 
-        controller.constantize.send(:helper, Spree::ActiveSaleEventsHelper)
-        controller.constantize.send(:helper, Spree::ActiveSalesHelper)
+      #  controller.constantize.send(:helper, Spree::ActiveSaleEventsHelper)
+     #   controller.constantize.send(:helper, Spree::ActiveSalesHelper)
+    
+    
+    
       }
     end
+    
 
     # use rspec for tests
     config.generators do |g|
